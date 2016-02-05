@@ -9,3 +9,4 @@ datasource.properties
 *.iml
 target
 /target/
+/bin/
