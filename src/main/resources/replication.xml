@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<replications>
+	<redis>
+		<id>userAof</id>
+		<aof>/usr/local/redis/data/appendonly-6402.aof</aof>
+		<offset>1877754654</offset>
+	</redis>
+	
+	<redis>
+		<id>shopAof</id>
+		<aof>/usr/local/redis/data/appendonly-6403.aof</aof>
+		<offset>2592775425</offset>
+	</redis>
+	
+	<redis>
+		<id>timelineAof</id>
+		<aof>/usr/local/redis/data/appendonly-6405.aof</aof>
+		<offset>0</offset>
+	</redis>
+
+	<rdb>
+		<id>gridy</id>
+		<url>jdbc:mysql://127.0.0.1:3336/gridy?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8</url>
+		<driver>com.mysql.jdbc.Driver</driver>
+		<user>root</user>
+		<pass/>
+	</rdb>
+
+	<replication redis="userAof" rdb="gridy">
+		<hash key="user:(\d+)" toTable="user_user">
+			<id name="$key(1)" to="id" convertor="stringInt"/>
+			<field name="shop" to="shop" convertor="stringBoolean"/>
+			<field name="status" to="status" convertor="stringByte"/>
+			<field name="userLevel" to="userLevel" convertor="stringByte"/>
+			<field name="gender" to="gender" convertor="stringByte"/>
+			<field name="binding" to="binding" convertor="stringShort"/>
+			<field name="logo" to="logo" convertor="string"/>
+			<field name="mobile" to="mobile" convertor="string"/>
+			<field name="nickname" to="nickname" convertor="string"/>
+			<field name="birthday" to="birthday" convertor="stringLongSqldate"/>
+			<field name="ts" to="ts" convertor="stringLongSqlts"/>
+			<field name="registTime" to="registTime" convertor="stringLongSqlts"/>
+			<field name="pwd" to="pwd" convertor="string"/>
+			<field name="registIp" to="registIp" convertor="string"/>
+			<field name="csId" to="csId" convertor="stringInt"/>
+			<field name="lat" to="lat" convertor="stringBigdeciL6"/>
+			<field name="lon" to="lon" convertor="stringBigdeciL6"/>
+			<field name="scoreCount" to="scoreCount" convertor="stringInt"/>
+			<field name="dealCount" to="dealCount" convertor="stringInt"/>
+			<field name="totalScore" to="totalScore" convertor="stringInt"/>
+			<field name="hightScoreTimes" to="hightScoreTimes" convertor="stringInt"/>
+			<field name="lastActiveTime" to="lastActiveTime" convertor="stringLongSqlts"/>
+			<field name="registDeviceId" to="registDeviceId" convertor="string"/>
+		</hash>
+	</replication>
+	
+	<replication redis="shopAof" rdb="gridy">
+		<hash key="shop:(\d+)" toTable="shop_shop">
+			<id name="$key(1)" to="id" convertor="stringInt"/>
+			<field name="hidding" to="hidding" convertor="stringBoolean"/>
+			<field name="adminHidding" to="adminHidding" convertor="stringBoolean"/>
+			<field name="shopLevel" to="shopLevel" convertor="stringByte"/>
+			<field name="lat" to="lat" convertor="stringBigdeciL6"/>
+			<field name="lon" to="lon" convertor="stringBigdeciL6"/>
+			<field name="tel" to="tel" convertor="string"/>
+			<field name="title" to="title" convertor="string"/>
+			<field name="name" to="name" convertor="string"/>
+			<field name="tags" to="tags" convertor="string"/>
+			<field name="keyWords" to="keyWords" convertor="string"/>
+			<field name="address" to="address" convertor="string"/>
+			<field name="pics" to="pics" convertor="string"/>
+			<field name="scope" to="scope" convertor="string"/>
+			<field name="status" to="status" convertor="stringByte"/>
+			
+			<field name="scoreCount" to="scoreCount" convertor="stringInt"/>
+			<field name="dealCount" to="dealCount" convertor="stringInt"/>
+			<field name="totalScore" to="totalScore" convertor="stringInt"/>
+			<field name="hightScoreTimes" to="hightScoreTimes" convertor="stringInt"/>
+			<field name="last30DaysDeals" to="last30DaysDeals" convertor="stringInt"/>
+			
+			<field name="verifyPic" to="verifyPic" convertor="string"/>
+			<field name="auth" to="auth" convertor="stringByte"/>
+			<field name="authNotPass" to="authNotPass" convertor="string"/>
+			
+			<field name="openingTime" to="openingTime" convertor="stringInt"/>
+			<field name="closeTime" to="closeTime" convertor="stringInt"/>
+			<field name="openWeeks" to="openWeeks" convertor="stringByte"/>
+			<field name="follow" to="follow" convertor="stringBoolean"/>
+			<field name="catgoryId" to="categoryId" convertor="stringInt"/>
+			<field name="cityCode" to="cityCode" convertor="string"/>
+			<field name="ts" to="ts" convertor="stringLongSqlts"/>
+			<field name="clicks" to="clicks" convertor="stringInt"/>
+			<field name="calls" to="calls" convertor="stringInt"/>
+			<field name="shares" to="shares" convertor="stringInt"/>
+			<field name="shopType" to="shopType" convertor="stringByte"/>
+		</hash>
+	</replication>
+	
+	<replication redis="timelineAof" rdb="gridy">
+		<hash key="timeline:(\d+)" toTable="timeline">
+			<id name="$key(1)" to="id" convertor="stringLong"/>
+			<field name="userId" to="userId" convertor="stringInt"/>
+			<field name="targetId" to="targetId" convertor="stringInt"/>
+			<field name="content" to="content" convertor="string"/>
+			<field name="pics" to="pics" convertor="string"/>
+			<field name="sendTime" to="sendTime" convertor="stringLongSqlts"/>
+			
+			<field name="currentLat" to="currentLat" convertor="stringBigdeciL6"/>
+			<field name="currentLon" to="currentLon" convertor="stringBigdeciL6"/>
+			<field name="lat" to="lat" convertor="stringBigdeciL6"/>
+			<field name="lon" to="lon" convertor="stringBigdeciL6"/>
+			
+			<field name="syncFlag" to="syncFlag" convertor="stringInt"/>
+			<field name="status" to="status" convertor="stringByte"/>
+			<field name="unapprovedReason" to="unapprovedReason" convertor="string"/>
+		</hash>
+		
+		<hash key="timeline:comment:(.+)" toTable="timeline_comment">
+			<id name="$key(1)" to="id" convertor="string"/>
+			<field name="ownerId" to="ownerId" convertor="stringInt"/>
+			<field name="timelineId" to="timelineId" convertor="stringLong"/>
+			<field name="colonyId" to="colonyId" convertor="stringInt"/>
+			<field name="content" to="content" convertor="string"/>
+			<field name="lat" to="lat" convertor="stringBigdeciL6"/>
+			<field name="lon" to="lon" convertor="stringBigdeciL6"/>
+			<field name="replyToUser" to="replyToUser" convertor="stringInt"/>
+			<field name="replyToComment" to="replyToComment" convertor="string"/>
+			<field name="createTime" to="createTime" convertor="stringLongSqlts"/>
+		</hash>
+
+	</replication>
+
+</replications>

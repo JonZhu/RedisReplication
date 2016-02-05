@@ -1,0 +1,11 @@
+.gitignore_global 
+.project
+.settings
+.classpath
+datasource.properties
+.idea
+.DS_Store
+.svn
+*.iml
+target
+/target/

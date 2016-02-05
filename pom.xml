@@ -1,0 +1,132 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.gridy.tool</groupId>
+	<artifactId>tool-redisrep</artifactId>
+	<version>1.0.5</version>
+	<description>redis数据复制</description>
+	
+	
+	<properties>
+		<url.nexus.prefix>http://10.0.0.101:8280/nexus/content</url.nexus.prefix>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<version.java.source>1.7</version.java.source>
+		<version.java.target>1.7</version.java.target>
+	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.7</version>
+		</dependency>
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>c3p0</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>0.9.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.35</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+		
+	</dependencies>
+	
+	
+	<repositories>
+		<repository>
+			<id>gridy-public</id>
+			<url>${url.nexus.prefix}/groups/public</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>gridy-public</id>
+			<url>${url.nexus.prefix}/groups/public</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>${version.java.source}</source>
+					<target>${version.java.target}</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+				<inherited>true</inherited>
+			</plugin>
+			
+			<!-- 
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.10</version>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>false</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			-->
+			
+		</plugins>
+	</build>
+
+	<distributionManagement>
+		<repository>
+			<id>gridy-releases</id>
+			<url>${url.nexus.prefix}/repositories/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>gridy-snapshots</id>
+			<url>${url.nexus.prefix}/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+	
+</project>
